@@ -12,7 +12,7 @@ function ExploreComponent() {
         alignItems={"center"}
         justifyContent={"center"}
         maxWidth={isMobile ? 200 : "100%"}
-        ml={6}
+        ml={isMobile ? "" : 6}
       >
         <Typography
           fontSize={isMobile ? 24 : 34}
@@ -33,8 +33,8 @@ function ExploreComponent() {
             src="https://vectorain.com/wp-content/uploads/2017/02/Pr%20085%20-%20TRI%20-%2001_12_10%20-%20035.jpg"
             alt="Image 1"
             style={{
-              width: isMobile ? "100%" : "200px",
-              height: isMobile ? "auto" : "200px",
+              width: isMobile ? "100px" : "200px",
+              height: isMobile ? "100px" : "200px",
             }}
           />
           <Typography
@@ -50,8 +50,8 @@ function ExploreComponent() {
             src="https://previews.123rf.com/images/rastudio/rastudio1512/rastudio151203116/49738469-wallet-with-monoey-line-icon-for-web-mobile-and-infographics-vector-white-icon-on-the-blue-gradient.jpg"
             alt="Image 2"
             style={{
-              width: isMobile ? "100%" : "200px",
-              height: isMobile ? "auto" : "200px",
+              width: isMobile ? "100px" : "200px",
+              height: isMobile ? "100px" : "200px",
             }}
           />
           <Typography

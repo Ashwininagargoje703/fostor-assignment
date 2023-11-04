@@ -52,7 +52,7 @@ function App() {
     <Box>
       <Navbar />
       <ExploreComponent />
-
+      <br />
       <Slider />
 
       <Box>
