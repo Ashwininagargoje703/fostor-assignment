@@ -1,10 +1,13 @@
-import { Box, Grid, Paper, Rating, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addRestaurant } from "./store/slice/restaurantSlice";
 import Navbar from "./components/navbar";
+import StarIcon from "@mui/icons-material/Star";
 import ExploreComponent from "./components/Explore";
+import PercentIcon from "@mui/icons-material/Percent";
+import Slider from "./components/slider";
 
 function App() {
   const { data } = useSelector((store) => store.restaurant);
@@ -12,6 +15,7 @@ function App() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isMobile = useMediaQuery("(max-width: 600px)");
 
   const fetchRestaurant = async () => {
     try {
@@ -49,57 +53,93 @@ function App() {
       <Navbar />
       <ExploreComponent />
 
-      <Typography>Popular once</Typography>
-      {data.map((item) => {
-        return (
-          <Box key={item.restaurant_id} sx={{ display: "flex" }}>
-            {/* Left Side: Image */}
-            <Box>
-              <img
-                src={item.images[0].url}
-                alt={item.restaurant_name}
-                style={{ width: "400px", height: "200px", borderRadius: 8 }}
-              />
-            </Box>
-            <Box>
-              <Typography variant="h6">
-                Restaurant Name: {item.restaurant_name}
-              </Typography>
-              <Typography>
-                Average cost: {item.currency.symbol}
-                {item.avg_cost_for_two}
-              </Typography>
+      <Slider />
 
-              {item.location && (
-                <Typography>
-                  Location: {item.location.location_address}
-                </Typography>
-              )}
+      <Box>
+        <Typography fontSize={24} fontWeight={600} ml={2}>
+          Popular once
+        </Typography>
 
-              {item.location && (
-                <Typography>
-                  Location: {item.location.location_address_2}
-                </Typography>
-              )}
-
-              {item.rating && (
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Rating
-                    name="restaurant-rating"
-                    value={item.rating.restaurant_avg_rating}
-                    precision={0.1} // Adjust the precision as needed
-                    readOnly
+        {data.map((item) => {
+          return (
+            <Box
+              key={item.restaurant_id}
+              sx={{
+                display: "flex",
+                p: 2,
+              }}
+            >
+              {/* Left Side: Image */}
+              <Link
+                to={`/restaurant/${item.restaurant_id}`}
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                }}
+              >
+                <Box>
+                  <img
+                    src={item.images[0].url}
+                    alt={item.restaurant_name}
+                    style={{
+                      width: isMobile ? "200px" : "400px",
+                      maxHeight: isMobile ? "auto" : "200px",
+                      borderRadius: 8,
+                    }}
                   />
-                  <Typography sx={{ marginLeft: "8px" }}>
-                    {item.rating.restaurant_avg_rating.toFixed(1)} (
-                    {item.rating.count} ratings)
-                  </Typography>
                 </Box>
-              )}
+              </Link>
+
+              <Link
+                to={`/restaurant/${item.restaurant_id}`}
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                }}
+              >
+                <Box ml={3}>
+                  <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                    {item.restaurant_name}
+                  </Typography>
+
+                  {item.location && (
+                    <Typography>{item.location.location_address}</Typography>
+                  )}
+
+                  {!item.location && (
+                    <Typography>
+                      cakes, Pastry, Pasta, cakes, Pastry, Pastacakes, Pastry,
+                      Pastacakes, Pastry, Pasta New Delhi
+                    </Typography>
+                  )}
+                  <Typography color={"#d89d81"}>
+                    <PercentIcon style={{ color: "#d89d81", marginTop: 5 }} /> 4
+                    offers tranding
+                  </Typography>
+
+                  <br />
+                  <Box display={"flex"} justifyContent={"space-between"}>
+                    {item.rating && (
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <StarIcon />
+
+                        <Typography sx={{ marginLeft: "8px" }}>
+                          {item.rating.restaurant_avg_rating.toFixed(1)}
+                        </Typography>
+                      </Box>
+                    )}
+
+                    <Typography>
+                      {item.currency.symbol}
+                      {item.avg_cost_for_two}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Link>
             </Box>
-          </Box>
-        );
-      })}
+          );
+        })}
+      </Box>
     </Box>
   );
 }
