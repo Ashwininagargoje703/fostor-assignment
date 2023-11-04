@@ -40,7 +40,7 @@ function SingleRestaurant() {
           display={"flex"}
           justifyContent={isMobile ? "space-between" : "center"}
           alignContent={"center"}
-          gap={40}
+          gap={isMobile ? "" : 40}
         >
           <Typography fontSize={isMobile ? 20 : 24} fontWeight={700}>
             {item.restaurant_name}
