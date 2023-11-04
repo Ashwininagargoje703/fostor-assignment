@@ -36,7 +36,7 @@ function Mobile({ setMobile }) {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         style={{ marginBottom: "1rem" }}
-        sx={{ width: isMobile ? "" : 340 }}
+        sx={{ width: isMobile ? "100%" : 340 }}
       />
       <Grid container spacing={2}>
         <Grid
